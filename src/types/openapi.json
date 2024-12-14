@@ -65,7 +65,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ConcertVenueCreated"
+                  "$ref": "#/components/schemas/dbEntryCreated"
                 }
               }
             }
@@ -212,7 +212,7 @@
   },
   "components": {
     "schemas": {
-      "ConcertVenueCreated": {
+      "dbEntryCreated": {
         "type": "object",
         "properties": {
           "message": {

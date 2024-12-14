@@ -1,5 +1,6 @@
 {
   "type": "object",
+  "description": "A Concert-Venue object",
   "properties": {
     "id": {
       "type": "integer",
@@ -11,23 +12,23 @@
     },
     "address": {
       "type": "string",
-      "description": "The address of the Concert-Venue"
+      "description": "The address of the Concert-Venue (optional)"
     },
     "city": {
       "type": "string",
-      "description": "The city where the Concert-Venue is located"
+      "description": "The city where the Concert-Venue is located (optional)"
     },
     "state": {
       "type": "string",
-      "description": "The state where the Concert-Venue is located"
+      "description": "The state where the Concert-Venue is located (optional)"
     },
     "country": {
       "type": "string",
-      "description": "The country where the Concert-Venue is located"
+      "description": "The country where the Concert-Venue is located (optional)"
     },
     "postal_code": {
       "type": "integer",
-      "description": "The postal code of the city where the Concert-Venue is located"
+      "description": "The postal code of the city where the Concert-Venue is located (optional)"
     },
     "type": {
       "type": "string",
@@ -35,16 +36,16 @@
     },
     "indoor_outdoor": {
       "type": "string",
-      "description": "Indicates if the venue is indoor, outdoor, or mixed",
+      "description": "Indicates if the venue is indoor, outdoor, or mixed (optional)",
       "enum": ["indoor", "outdoor", "mixed"]
     },
     "capacity": {
       "type": "integer",
-      "description": "The seating or standing capacity of the venue "
+      "description": "The seating or standing capacity of the venue (optional)"
     },
     "website": {
       "type": "string",
-      "description": "A URL for the venue's official website"
+      "description": "A URL for the venue's official website (optional)"
     },
     "notes": {
       "type": "string",
@@ -52,15 +53,15 @@
     },
     "latitude": {
       "type": "string",
-      "description": "Latitude coordinates for mapping purposes"
+      "description": "Latitude coordinates for mapping purposes (optional)"
     },
     "longitude": {
       "type": "string",
-      "description": "Longitude coordinates for mapping purposes"
+      "description": "Longitude coordinates for mapping purposes (optional)"
     },
     "rating": {
       "type": "integer",
-      "description": "A URL for the venue's official website"
+      "description": "Rating of the venue from 0 to 10 (optional)"
     }
   },
   "required": ["name"],
@@ -68,7 +69,7 @@
     "schemas": {
       "ConcertVenue_Type": {
         "type": "string",
-        "description": "The type of venue (e.g., 'Arena', 'Theater', 'Club')",
+        "description": "The type of venue (e.g., 'Arena', 'Theater', 'Club') (optional)",
         "oneOf": [
           {
             "const": "Arena",
