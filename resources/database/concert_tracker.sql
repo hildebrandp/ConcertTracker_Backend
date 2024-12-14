@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 14, 2024 at 10:00 PM
+-- Generation Time: Dec 15, 2024 at 12:45 AM
 -- Server version: 10.11.6-MariaDB
 -- PHP Version: 8.0.30
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `ConcertBands` (
   `id` int(11) NOT NULL,
-  `band_name` text NOT NULL COMMENT 'The name of the band you have seen',
+  `name` text NOT NULL COMMENT 'The name of the band you have seen',
   `genre` text DEFAULT NULL COMMENT 'The music genre of the band (e.g., "Rock," "Pop," "Metal")',
   `origin_country` text DEFAULT NULL COMMENT 'The country the band is from',
   `rating` int(11) DEFAULT NULL COMMENT 'A rating for the band''s performance (e.g., a scale from 1 to 10)',
@@ -46,10 +46,11 @@ CREATE TABLE `ConcertBands` (
 
 CREATE TABLE `ConcertEvents` (
   `id` int(11) NOT NULL,
-  `event_name` text NOT NULL,
-  `event_datetime` datetime NOT NULL,
-  `event_venue` int(11) NOT NULL,
-  `event_rating` int(11) NOT NULL
+  `name` text NOT NULL,
+  `datetime` datetime NOT NULL,
+  `venue_id` int(11) NOT NULL,
+  `rating` int(11) DEFAULT NULL,
+  `notes` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 -- --------------------------------------------------------
@@ -99,7 +100,8 @@ CREATE TABLE `EventBands` (
   `event_id` int(11) NOT NULL,
   `band_id` int(11) NOT NULL,
   `setlist` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'A text field for storing the setlist of songs performed (optional)',
-  `rating` int(11) NOT NULL COMMENT 'A rating for the band''s performance (e.g., a scale from 1 to 10)'
+  `rating` int(11) NOT NULL COMMENT 'A rating for the band''s performance (e.g., a scale from 1 to 10)',
+  `notes` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 -- --------------------------------------------------------

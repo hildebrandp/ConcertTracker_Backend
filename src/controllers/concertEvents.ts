@@ -62,10 +62,10 @@ export const create_ConcertEvent = async (req: Request, res: Response) => {
         return;
     }
 
-    const { event_name,
-        event_datetime,
-        event_venue,
-        event_rating,
+    const { name,
+        datetime,
+        venue_id,
+        rating,
         notes = null
     } = eventData;
 
@@ -75,10 +75,10 @@ export const create_ConcertEvent = async (req: Request, res: Response) => {
         connection = await getConnection();
 
         // Insert the new venue into the database
-        const query = `INSERT INTO ${table_name} (event_name, event_datetime, event_venue, event_rating, notes) 
+        const query = `INSERT INTO ${table_name} (name, datetime, venue_id, rating, notes) 
             VALUES (?, ?, ?, ?, ?)`;
 
-        const result = await connection.query(query, [event_name, event_datetime, event_venue, event_rating, notes]);
+        const result = await connection.query(query, [name, datetime, venue_id, rating, notes]);
 
         // Check if the insert was successful
         if (result.affectedRows === 1) {
@@ -128,17 +128,17 @@ export const update_ConcertEvent_ById = async (req: Request, res: Response) => {
         }
 
         // Update the concert event
-        const { event_name,
-            event_datetime,
-            event_venue,
-            event_rating,
+        const { name,
+            datetime,
+            venue_id,
+            rating,
             notes = null
         } = eventData;
 
-        const query = `UPDATE ${table_name} SET event_name = ?, event_datetime = ?, event_venue = ?, 
-            event_rating = ?, notes = ?  WHERE id = ?`;
+        const query = `UPDATE ${table_name} SET name = ?, datetime = ?, venue_id = ?, 
+            rating = ?, notes = ? WHERE id = ?`;
 
-        const result = await connection.query(query, [event_name, event_datetime, event_venue, event_rating, notes, id]);
+        const result = await connection.query(query, [name, datetime, venue_id, rating, notes, id]);
 
         if (result.affectedRows === 1) {
             res.status(200).json({ message: 'Concert-Event updated successfully' });

@@ -62,7 +62,7 @@ export const create_ConcertBand = async (req: Request, res: Response) => {
         return;
     }
 
-    const { band_name,
+    const { name,
         genre = null,
         origin_country = null,
         rating = null,
@@ -77,10 +77,10 @@ export const create_ConcertBand = async (req: Request, res: Response) => {
         connection = await getConnection();
 
         // Insert the new venue into the database
-        const query = `INSERT INTO ${table_name} (band_name, genre, origin_country, rating, notes, link, website) 
+        const query = `INSERT INTO ${table_name} (name, genre, origin_country, rating, notes, link, website) 
             VALUES (?, ?, ?, ?, ?, ?, ?)`;
 
-        const result = await connection.query(query, [band_name, genre, origin_country, rating, notes, link, website]);
+        const result = await connection.query(query, [name, genre, origin_country, rating, notes, link, website]);
 
         // Check if the insert was successful
         if (result.affectedRows === 1) {
@@ -130,7 +130,7 @@ export const update_ConcertBand_ById = async (req: Request, res: Response) => {
         }
 
         // Update the concert band
-        const { band_name,
+        const { name,
             genre = null,
             origin_country = null,
             rating = null,
@@ -139,10 +139,10 @@ export const update_ConcertBand_ById = async (req: Request, res: Response) => {
             website = null
         } = bandData;
 
-        const query = `UPDATE ${table_name} SET band_name = ?, genre = ?, origin_country = ?, rating = ?, notes = ?, 
+        const query = `UPDATE ${table_name} SET name = ?, genre = ?, origin_country = ?, rating = ?, notes = ?, 
             link = ?, website = ? WHERE id = ?`;
 
-        const result = await connection.query(query, [band_name, genre, origin_country, rating, notes, link, website, id]);
+        const result = await connection.query(query, [name, genre, origin_country, rating, notes, link, website, id]);
 
         if (result.affectedRows === 1) {
             res.status(200).json({ message: 'Concert-Band updated successfully' });
