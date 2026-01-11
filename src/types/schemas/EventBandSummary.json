@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "description": "Summary data for a band appearance",
+  "properties": {
+    "event_band_id": {
+      "type": "integer",
+      "description": "The event-band ID"
+    },
+    "date": {
+      "type": "string",
+      "description": "Event date"
+    },
+    "band_name": {
+      "type": "string",
+      "description": "The band name"
+    },
+    "venue_name": {
+      "type": "string",
+      "description": "The venue name"
+    },
+    "rating": {
+      "type": "integer",
+      "description": "Performance rating (optional)"
+    }
+  },
+  "required": ["event_band_id", "date", "band_name"]
+}

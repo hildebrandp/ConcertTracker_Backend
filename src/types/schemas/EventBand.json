@@ -23,6 +23,14 @@
       "type": "integer",
       "description": "A rating for the band's performance (e.g., a scale from 1 to 10) (optional)"
     },
+    "mainAct": {
+      "type": "boolean",
+      "description": "If the band is the main act true, false otherwise"
+    },
+    "runningOrder": {
+      "type": "integer",
+      "description": "The order when the band played"
+    },
     "notes": {
       "type": "string",
       "description": "Additional notes about the Event (optional)"

@@ -5,7 +5,8 @@ import { getConnection } from '../config/db';
 import JSONSchemaValidator from '../utils/JSONSchemaValidator';
 
 
-const table_name = "ConcertVenues";
+const table_name_ConcertVenues = "ConcertVenues";
+const table_name_ConcertEvents = "ConcertEvents";
 const schema_ConcertVenue_FilePath = path.resolve(__dirname, "../types/schemas/ConcertVenue.json");
 
 const validator = new JSONSchemaValidator();
@@ -14,7 +15,7 @@ export const get_AllConcertVenues = async (req: Request, res: Response) => {
     let connection;
     try {
         connection = await getConnection();
-        const rows = await connection.query(`SELECT * FROM ${table_name}`);
+        const rows = await connection.query(`SELECT * FROM ${table_name_ConcertVenues}`);
         res.json(rows);
     } catch (error) {
         console.error('Error fetching users:', error);
@@ -35,7 +36,7 @@ export const get_ConcertVenue_ById = async (req: Request, res: Response) => {
 
     try {
         connection = await getConnection();
-        const query = `SELECT * FROM ${table_name} WHERE id = ?`;
+        const query = `SELECT * FROM ${table_name_ConcertVenues} WHERE id = ?`;
         const rows = await connection.query(query, [id]); // Use parameterized query to prevent SQL injection
 
         if (rows.length === 0) {
@@ -84,7 +85,7 @@ export const create_ConcertVenue = async (req: Request, res: Response) => {
         connection = await getConnection();
 
         // Insert the new venue into the database
-        const query = `INSERT INTO ${table_name} (name, address, city, state, country, postal_code, type, 
+        const query = `INSERT INTO ${table_name_ConcertVenues} (name, address, city, state, country, postal_code, type, 
             indoor_outdoor, capacity, website, notes, latitude, longitude, rating) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
         const result = await connection.query(query, [name, address, city, state, country, postal_code,
@@ -128,7 +129,7 @@ export const update_ConcertVenue_ById = async (req: Request, res: Response) => {
 
         // Check if the concert venue exists
         const [existingVenue] = await connection.query(
-            `SELECT * FROM ${table_name} WHERE id = ?`,
+            `SELECT * FROM ${table_name_ConcertVenues} WHERE id = ?`,
             [id]
         );
 
@@ -154,7 +155,7 @@ export const update_ConcertVenue_ById = async (req: Request, res: Response) => {
             rating = null
         } = venueData;
 
-        const query = `UPDATE ${table_name} SET name = ?, address = ?, city = ?, state = ?, country = ?, 
+        const query = `UPDATE ${table_name_ConcertVenues} SET name = ?, address = ?, city = ?, state = ?, country = ?, 
             postal_code = ?, type = ?, indoor_outdoor = ?, capacity = ?, website = ?, notes = ?, 
             latitude = ?, longitude = ?, rating = ? WHERE id = ?`;
 
@@ -168,6 +169,61 @@ export const update_ConcertVenue_ById = async (req: Request, res: Response) => {
         }
     } catch (error) {
         console.error('Error updating Concert-Venue:', error);
+        res.status(500).json({ message: 'Database error' });
+    } finally {
+        if (connection) connection.end();
+    }
+};
+
+export const delete_ConcertVenue_ById = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    let connection;
+
+    if (isNaN(Number(id))) {
+        res.status(400).send({ message: 'Invalid ID format' });
+        return;
+    }
+
+    try {
+        connection = await getConnection();
+        await connection.beginTransaction();
+
+        const [existingVenue] = await connection.query(
+            `SELECT * FROM ${table_name_ConcertVenues} WHERE id = ?`,
+            [id]
+        );
+
+        if (!existingVenue) {
+            await connection.rollback();
+            res.status(404).json({ message: `Concert-Venue with ID [ ${id} ] not found` });
+            return;
+        }
+
+        const resCountEvents = await connection.query(
+            `SELECT COUNT(*) AS total FROM ${table_name_ConcertEvents} WHERE venue_id = ?`,
+            [id]
+        );
+        const countEvents = Number(resCountEvents?.[0]?.total ?? 0);
+
+        if (countEvents > 0) {
+            await connection.rollback();
+            res.status(409).json({ message: 'Venue is linked to existing events.' });
+            return;
+        }
+
+        await connection.query(`DELETE FROM ${table_name_ConcertVenues} WHERE id = ?`, [id]);
+
+        await connection.commit();
+        res.status(200).json({ message: 'Concert-Venue deleted successfully' });
+    } catch (error) {
+        if (connection) {
+            try {
+                await connection.rollback();
+            } catch (rollbackError) {
+                console.error('Rollback failed:', rollbackError);
+            }
+        }
+        console.error('Error deleting Concert-Venue:', error);
         res.status(500).json({ message: 'Database error' });
     } finally {
         if (connection) connection.end();

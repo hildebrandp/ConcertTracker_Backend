@@ -35,5 +35,5 @@
       "description": "Link to the bands website (optional)"
     }
   },
-  "required": ["band_name"]
+  "required": ["name"]
 }

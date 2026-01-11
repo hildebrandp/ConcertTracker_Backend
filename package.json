@@ -8,7 +8,8 @@
     "test": "jest --verbose",
     "dev": "nodemon src/index.ts",
     "validate:docs": "openapi validate ./src/routes/openapi/openapi.json",
-    "bundle:openapi": "npx redocly bundle src/types/openapi.json -o src/routes/openapi/openapi.json"
+    "bundle:openapi": "npx redocly bundle src/types/openapi.json -o src/routes/openapi/openapi.json",
+    "setup": "npm run validate:docs && npm run bundle:openapi && npm run tsc"
   },
   "repository": {
     "type": "git",

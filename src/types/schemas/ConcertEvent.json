@@ -28,5 +28,5 @@
       "description": "Additional notes about the Event (optional)"
     }
   },
-  "required": ["event_name", "event_datetime", "event_venue"]
+  "required": ["name", "datetime", "venue_id"]
 }

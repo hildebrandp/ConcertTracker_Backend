@@ -42,6 +42,7 @@ class JSONSchemaValidator {
                 console.error(
                     `  - ${error.instancePath || '/'} ${error.message} (schema path: ${error.schemaPath})`
                 );
+                console.error(error);
             });
 
             return false; // Object is invalid

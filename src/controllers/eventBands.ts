@@ -24,6 +24,57 @@ export const get_AllEventBands = async (req: Request, res: Response) => {
     }
 };
 
+export const get_AllEventBands_ByEventId = async (req: Request, res: Response) => {
+    const { id } = req.params; // Get the 'id' parameter from the request
+    let connection;
+
+    if (isNaN(Number(id))) {
+        res.status(400).send({ message: 'Invalid ID format' });
+        return;
+    }
+
+    try {
+        connection = await getConnection();
+        const query = `SELECT COUNT(*) AS total FROM ${table_name} WHERE event_id = ?`;
+        const resCountBands = await connection.query(query, [id]); // Use parameterized query to prevent SQL injection
+        const countBands = Number(resCountBands?.[0]?.total ?? 0);
+
+        res.json({count: countBands});
+    } catch (error) {
+        console.error('Error fetching Event-Bands:', error);
+        res.status(500).send('Error fetching Event-Bands');
+    } finally {
+        if (connection) connection.end();
+    }
+};
+
+export const get_AllEventBands_Details_ByEventId = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    let connection;
+
+    if (isNaN(Number(id))) {
+        res.status(400).send({ message: 'Invalid ID format' });
+        return;
+    }
+
+    try {
+        connection = await getConnection();
+        const query = `SELECT eb.id AS event_band_id, eb.band_id, b.name AS band_name,
+            eb.mainAct, eb.runningOrder, eb.rating, eb.notes
+            FROM ${table_name} eb
+            JOIN ConcertBands b ON b.id = eb.band_id
+            WHERE eb.event_id = ?
+            ORDER BY eb.runningOrder ASC, b.name`;
+        const rows = await connection.query(query, [id]);
+
+        res.json(rows);
+    } catch (error) {
+        console.error('Error fetching Event-Bands:', error);
+        res.status(500).send('Error fetching Event-Bands');
+    } finally {
+        if (connection) connection.end();
+    }
+};
 export const get_EventBand_ById = async (req: Request, res: Response) => {
     const { id } = req.params; // Get the 'id' parameter from the request
     let connection;
@@ -66,6 +117,8 @@ export const create_EventBand = async (req: Request, res: Response) => {
         band_id,
         setlist = null,
         rating = null,
+        mainAct = false,
+        runningOrder = null,
         notes = null
     } = bandData;
 
@@ -75,9 +128,9 @@ export const create_EventBand = async (req: Request, res: Response) => {
         connection = await getConnection();
 
         // Insert the new venue into the database
-        const query = `INSERT INTO ${table_name} (event_id, band_id, setlist, rating, notes) VALUES (?, ?, ?, ?, ?)`;
+        const query = `INSERT INTO ${table_name} (event_id, band_id, setlist, rating, mainAct, runningOrder, notes) VALUES (?, ?, ?, ?, ?, ?, ?)`;
 
-        const result = await connection.query(query, [event_id, band_id, setlist, rating, notes]);
+        const result = await connection.query(query, [event_id, band_id, setlist, rating, mainAct, runningOrder, notes]);
 
         // Check if the insert was successful
         if (result.affectedRows === 1) {
@@ -131,12 +184,14 @@ export const update_EventBand_ById = async (req: Request, res: Response) => {
             band_id,
             setlist = null,
             rating = null,
+            mainAct = false,
+            runningOrder = null,
             notes = null
         } = bandData;
 
-        const query = `UPDATE ${table_name} SET event_id = ?, band_id = ?, setlist = ?, rating = ?, notes = ? WHERE id = ?`;
+        const query = `UPDATE ${table_name} SET event_id = ?, band_id = ?, setlist = ?, rating = ?, mainAct = ?, runningOrder = ?, notes = ? WHERE id = ?`;
 
-        const result = await connection.query(query, [event_id, band_id, setlist, rating, notes, id]);
+        const result = await connection.query(query, [event_id, band_id, setlist, rating, mainAct, runningOrder, notes, id]);
 
         if (result.affectedRows === 1) {
             res.status(200).json({ message: 'Event-Band updated successfully' });

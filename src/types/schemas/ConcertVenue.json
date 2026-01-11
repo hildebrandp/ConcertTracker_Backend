@@ -172,7 +172,6 @@
             "description": "Large, flat areas often used for electronic or rock festivals."
           }
         ],
-        "required": ["venue_type"],
         "additionalProperties": false
       }
     }
