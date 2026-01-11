@@ -118,7 +118,7 @@ export const get_ConcertDetails = async (req: Request, res: Response) => {
         const venueName = venueRows?.[0]?.name ?? null;
 
         const bands = await connection.query(
-            `SELECT b.id, b.name, eb.mainAct, eb.runningOrder
+            `SELECT b.id, b.name, eb.mainAct, eb.runningOrder, eb.rating
              FROM EventBands eb
              JOIN ConcertBands b ON b.id = eb.band_id
              WHERE eb.event_id = ?
@@ -145,7 +145,8 @@ export const get_ConcertDetails = async (req: Request, res: Response) => {
                 id: band.id,
                 name: band.name,
                 mainAct: band.mainAct === null ? false : Boolean(band.mainAct),
-                runningOrder: band.runningOrder ?? null
+                runningOrder: band.runningOrder ?? null,
+                rating: band.rating ?? null,
             })),
             participatedWith: participants.map((participant: any) => ({
                 id: participant.id,
