@@ -6,6 +6,10 @@
       "type": "integer",
       "description": "The event-band ID"
     },
+    "event_id": {
+      "type": "integer",
+      "description": "The event ID"
+    },
     "date": {
       "type": "string",
       "description": "Event date"
@@ -27,5 +31,5 @@
       "description": "Performance rating (optional)"
     }
   },
-  "required": ["event_band_id", "date", "band_name"]
+  "required": ["event_band_id", "event_id", "date", "band_name"]
 }
