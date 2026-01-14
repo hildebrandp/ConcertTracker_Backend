@@ -22,6 +22,10 @@
       "type": "integer",
       "description": "Band rating (optional)"
     },
+    "last_event_name": {
+      "type": "string",
+      "description": "Event name for the last time seen (optional)"
+    },
     "last_venue_name": {
       "type": "string",
       "description": "Venue name for the last time seen (optional)"

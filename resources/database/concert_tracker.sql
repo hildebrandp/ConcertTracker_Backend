@@ -38,16 +38,6 @@ CREATE TABLE `ConcertBands` (
   `website` text DEFAULT NULL COMMENT 'Link to the bands website'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
---
--- Daten für Tabelle `ConcertBands`
---
-
-INSERT INTO `ConcertBands` (`id`, `name`, `genre`, `origin_country`, `rating`, `notes`, `link`, `website`) VALUES
-(1, 'Solstafir', 'Metal', 'Iceland', 9, NULL, NULL, 'https://solstafir.is/'),
-(2, 'Knasterbart', 'Rock', 'Germany', 9, NULL, NULL, 'https://www.knasterbart.de/'),
-(6, 'Best Band Ever', '', '', 0, '', '', ''),
-(7, 'Krasse Band', '', '', 0, '', '', '');
-
 -- --------------------------------------------------------
 
 --
@@ -62,20 +52,6 @@ CREATE TABLE `ConcertEvents` (
   `rating` int(11) DEFAULT NULL,
   `notes` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
-
---
--- Daten für Tabelle `ConcertEvents`
---
-
-INSERT INTO `ConcertEvents` (`id`, `name`, `datetime`, `venue_id`, `rating`, `notes`) VALUES
-(1, 'Solstafir', '2024-12-05 19:00:00', 1, 8, NULL),
-(2, 'Brantweihnachten', '2025-12-20 19:00:00', 1, 8, ''),
-(3, 'Brantweihnachten', '2025-12-20 19:00:00', 1, 8, ''),
-(4, 'foobar', '2026-01-09 19:00:00', 1, 0, ''),
-(5, 'foobar', '2026-01-09 19:00:00', 1, 0, ''),
-(6, 'blabla', '2026-01-08 19:00:00', 1, 6, ''),
-(7, 'Ballern', '2026-01-10 19:00:00', 1, 10, ''),
-(8, 'Ballern 2.0', '2026-01-10 19:00:00', 13, 4, '');
 
 -- --------------------------------------------------------
 
@@ -113,16 +89,6 @@ CREATE TABLE `ConcertVenues` (
   `rating` int(11) DEFAULT NULL COMMENT 'Rating of the venue from 0 to 10'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
---
--- Daten für Tabelle `ConcertVenues`
---
-
-INSERT INTO `ConcertVenues` (`id`, `name`, `address`, `city`, `state`, `country`, `postal_code`, `type`, `indoor_outdoor`, `capacity`, `website`, `notes`, `latitude`, `longitude`, `rating`) VALUES
-(1, 'Technikum', 'Speicherstraße 26', 'Munich', 'Bavaria', 'Germany', 81671, '', 'indoor', 757, 'https://www.eventfabrik-muenchen.de/technikum/#', 'Good accoustic', '48.123505', '11.606600', 6),
-(2, 'Backstage Club', 'Reitknechtstraße 6', 'Munich', 'Bavaria', 'Germany', 80639, 'Club', 'indoor', 200, 'https://backstage.eu/', '', '48.144925', '11.521989', 7),
-(12, 'Backstage Werk', 'Reitknechtstraße 6', 'Munich', 'Bavaria', 'Germany', 80639, 'Club', 'indoor', 1500, 'https://backstage.eu/', '', '48.144925', '11.521989', 7),
-(13, 'Backstage-Werk', '', '', '', '', 0, 'Club', 'indoor', 0, '', '', '', '', 0);
-
 -- --------------------------------------------------------
 
 --
@@ -139,18 +105,6 @@ CREATE TABLE `EventBands` (
   `runningOrder` int(11) NOT NULL,
   `notes` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
-
---
--- Daten für Tabelle `EventBands`
---
-
-INSERT INTO `EventBands` (`id`, `event_id`, `band_id`, `setlist`, `rating`, `mainAct`, `runningOrder`, `notes`) VALUES
-(1, 1, 1, NULL, 9, 0, 0, NULL),
-(3, 5, 6, NULL, NULL, 0, 0, NULL),
-(4, 6, 7, NULL, NULL, 0, 0, NULL),
-(5, 7, 2, NULL, NULL, 0, 0, NULL),
-(6, 8, 2, NULL, NULL, 0, 0, NULL),
-(7, 8, 1, NULL, NULL, 0, 0, NULL);
 
 -- --------------------------------------------------------
 

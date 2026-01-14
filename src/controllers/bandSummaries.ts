@@ -22,6 +22,14 @@ export const get_BandSummaries = async (_req: Request, res: Response) => {
                 CAST(COUNT(eb.id) AS SIGNED) AS seen_count,
                 b.rating AS rating,
                 (
+                    SELECT e2.name
+                    FROM ${table_name_EventBands} eb2
+                    JOIN ${table_name_ConcertEvents} e2 ON e2.id = eb2.event_id
+                    WHERE eb2.band_id = b.id
+                    ORDER BY e2.datetime DESC
+                    LIMIT 1
+                ) AS last_event_name,
+                (
                     SELECT v.name
                     FROM ${table_name_EventBands} eb2
                     JOIN ${table_name_ConcertEvents} e2 ON e2.id = eb2.event_id

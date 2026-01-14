@@ -18,6 +18,7 @@ export const get_EventBandSummaries = async (_req: Request, res: Response) => {
             SELECT
                 CAST(eb.id AS SIGNED) AS event_band_id,
                 e.datetime AS date,
+                e.name AS event_name,
                 b.name AS band_name,
                 v.name AS venue_name,
                 eb.rating AS rating
