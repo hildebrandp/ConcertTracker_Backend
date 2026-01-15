@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Erstellungszeit: 11. Jan 2026 um 18:20
+-- Erstellungszeit: 11. Jan 2026 um 22:23
 -- Server-Version: 10.11.11-MariaDB
 -- PHP-Version: 8.2.28
 
@@ -172,13 +172,13 @@ ALTER TABLE `EventParticipants`
 -- AUTO_INCREMENT für Tabelle `ConcertBands`
 --
 ALTER TABLE `ConcertBands`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=209;
 
 --
 -- AUTO_INCREMENT für Tabelle `ConcertEvents`
 --
 ALTER TABLE `ConcertEvents`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT für Tabelle `ConcertParticipants`
@@ -190,13 +190,13 @@ ALTER TABLE `ConcertParticipants`
 -- AUTO_INCREMENT für Tabelle `ConcertVenues`
 --
 ALTER TABLE `ConcertVenues`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT für Tabelle `EventBands`
 --
 ALTER TABLE `EventBands`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=366;
 
 --
 -- AUTO_INCREMENT für Tabelle `EventParticipants`
